@@ -1,0 +1,17 @@
+body {
+  background-image: linear-gradient(#edede9, #d6ccc2);
+  background-attachment: fixed;
+}
+
+navigation .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+navigation .container .container {
+  gap: 5px;
+}
+
+navigation img {
+  width: 50px;
+}
