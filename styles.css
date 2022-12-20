@@ -1,17 +1,234 @@
+/* fonts */
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;500&display=swap");
+
 body {
   background-image: linear-gradient(#edede9, #d6ccc2);
   background-attachment: fixed;
+  font-family: Raleway;
+  color: #434337;
 }
 
-navigation .container {
+nav {
+  padding: 0 30px 0 30px;
+  margin-bottom: 50px;
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav .container-left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+nav .container span {
+  font-weight: 500;
+}
+
+nav img {
+  width: 35px;
+  opacity: 50%;
+}
+
+nav .container .container-right {
+  gap: 5px;
+}
+
+nav input {
+  padding: 7px;
+  border: none;
+  border-radius: 7px;
+  font-family: "Raleway";
+  font-weight: 400;
+  font-size: 11pt;
+}
+
+.PIN {
+  width: 78px;
+}
+
+.login-btn {
+  padding-left: 10px;
+}
+
+section {
+  padding: 15px;
+}
+
+.current-balance {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 35px;
+}
+
+.current-balance span {
+  display: block;
+}
+
+.current-balance .title {
+  font-size: 18pt;
+  font-weight: 500;
+}
+
+.current-balance .date {
+  font-size: 11pt;
+  color: #5a5a49;
+}
+
+.acct-balance {
+  font-size: 28pt;
+  font-weight: 500;
+}
+
+.widgets {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 35px;
+  gap: 10px;
+}
+
+.transactions {
+  background-color: rgb(255, 255, 255, 0.75);
+  width: 55%;
+  border-radius: 7px;
+}
+
+.transaction {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #edede9;
+  padding: 20px 30px;
+}
+
+.td-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.transaction .tag,
+.transaction .date {
+  font-size: 9pt;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.transaction .tag {
+  padding: 3px 7px;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+.transaction .deposit {
+  background-color: #97a67d;
+}
+
+.transaction .withdrawal {
+  background-color: #b9777e;
+}
+
+.transaction .date {
+}
+
+.transaction .amount {
+}
+
+.widgets .container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.widgets button {
+  background-color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+
+.widgets .title {
+  margin-bottom: 20px;
+  font-size: 13pt;
+  font-weight: 500;
+}
+
+.transfers,
+.loans,
+.close-acct {
+  border-radius: 7px;
+  padding: 35px;
+}
+
+.transfers input,
+.loans input,
+.close-acct input {
+  width: 110px;
+  padding: 7px;
+  margin-right: 7px;
+  border: none;
+  border-radius: 7px;
+  background-color: rgb(255, 255, 255, 0.55);
+  font-family: "Raleway";
+  font-weight: 400;
+  font-size: 10pt;
+}
+
+.transfers {
+  background-color: rgb(245, 235, 224, 0.75);
+}
+
+.loans {
+  background-color: rgb(227, 213, 202, 0.75);
+}
+
+.close-acct {
+  background-color: rgb(213, 189, 175, 0.75);
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-container {
+  text-transform: uppercase;
+  width: 55%;
   display: flex;
   justify-content: space-between;
 }
 
-navigation .container .container {
-  gap: 5px;
+.in,
+.out,
+.interest {
+  font-size: 9pt;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-navigation img {
-  width: 50px;
+.mvmt {
+  font-size: 15pt;
+}
+
+.in .mvmt,
+.interest .mvmt {
+  color: #78885d;
+}
+
+.out .mvmt {
+  color: #9f5259;
+}
+
+.countdown {
+  font-size: 9pt;
 }

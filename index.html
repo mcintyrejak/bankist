@@ -8,18 +8,68 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <navigation>
+    <nav>
       <div class="container">
-        <span>Log in to get started</span>
-        <img
-          src="https://i.postimg.cc/xCMtQRZr/pie-graph.png"
-          alt="Bankist Icon"
-        />
-        <div class="container">
-          <input type="text" name="username" /> <input type="text" name="PIN" />
+        <div class="container-left">
+          <img
+            src="https://i.postimg.cc/xCMtQRZr/pie-graph.png"
+            alt="Bankist Icon"
+          />
+          <span>Login to get started</span>
+        </div>
+        <div class="container-right">
+          <input type="text" class="username" placeholder="Username" />
+          <input type="text" class="PIN" placeholder="PIN" />
+          <span class="login-btn">&#10233;</span>
         </div>
       </div>
-    </navigation>
+    </nav>
+
+    <section>
+      <article class="user">
+        <div class="current-balance">
+          <div class="container">
+            <span class="title">Current balance</span>
+            <span class="date">As of today's date</span>
+          </div>
+          <div class="acct-balance">$25,952.59</div>
+        </div>
+        <div class="widgets">
+          <div class="transactions">
+            <div class="transaction">
+              <div class="td-container">
+                <span class="tag withdrawal">[] Movement</span>
+                <span class="date">1/1/11</span>
+              </div>
+              <span class="amount">$$$</span>
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="transfers">
+              <div class="title">Transfer Money</div>
+<input type="text" class="txf-to"> <input type="text" class="txf-amt"> <button class="txf-btn">&#10233;</button>
+        </div>
+            <div class="loans">
+              <div class="title">Request Loan</div>
+  <input type="text" class="loan-amt"> <button class="request-btn">&#10233;</button></div>
+            <div class="close-acct"> <div class="title">Close Account</div>
+            <input type="text" class="confirm-user"> <input type="text" class="confirm-pin"> <button class="close-btn">&#10233;</button></div>
+          </div>
+
+        </div>
+        <footer>
+          <div class="summary-container">
+            <span class="in">In <span class="mvmt">$$</span></span>
+            <span class="out">Out <span class="mvmt">$$</span></span>
+            <span class="interest">Interest <span class="mvmt">$$</span><span>
+          </div>
+          <div class="countdown">
+            You will be logged out in <span class="time">minutes</span>
+          </div>
+        </footer>
+      </article>
+    </section>
 
     <script src="scripts.js"></script>
   </body>
