@@ -18,14 +18,16 @@
           <span>Login to get started</span>
         </div>
         <div class="container-right">
-          <input type="text" class="username" placeholder="Username" />
-          <input type="text" class="PIN" placeholder="PIN" />
-          <span class="login-btn">&#10233;</span>
+          <form>
+          <input type="text" class="username" name="username" placeholder="Username" />
+          <input type="text" class="pin" name="pin" placeholder="PIN" />
+          <input type="submit" class="login-btn" value="&#10233;">
+          </form>
         </div>
       </div>
     </nav>
 
-    <section>
+    <main>
       <article class="user">
         <div class="current-balance">
           <div class="container">
@@ -48,13 +50,18 @@
           <div class="container">
             <div class="transfers">
               <div class="title">Transfer Money</div>
-<input type="text" class="txf-to"> <input type="text" class="txf-amt"> <button class="txf-btn">&#10233;</button>
+              <form>
+<input type="text" class="txf-to"> <input type="number" class="txf-amt"> <button type="submit" class="txf-btn">&#10233;</button></form>
         </div>
             <div class="loans">
               <div class="title">Request Loan</div>
-  <input type="text" class="loan-amt"> <button class="request-btn">&#10233;</button></div>
+  
+  <form>            
+    <input type="number" class="loan-amt"> <button type="submit" class="request-btn">&#10233;</button></form></div>
             <div class="close-acct"> <div class="title">Close Account</div>
-            <input type="text" class="confirm-user"> <input type="text" class="confirm-pin"> <button class="close-btn">&#10233;</button></div>
+            <form>
+            <input type="text" class="confirm-user"> <input type="password" class="confirm-pin"> <button type="submit" class="close-btn">&#10233;</button></div>
+            </form>
           </div>
 
         </div>
@@ -62,14 +69,15 @@
           <div class="summary-container">
             <span class="in">In <span class="mvmt">$$</span></span>
             <span class="out">Out <span class="mvmt">$$</span></span>
-            <span class="interest">Interest <span class="mvmt">$$</span><span>
+            <span class="interest">Interest <span class="mvmt">$$</span></span>
+            <span class="sort"> &nbsp;&nbsp;Sort <span class="mvmt">&#8693;&nbsp;</span> </span>
           </div>
           <div class="countdown">
             You will be logged out in <span class="time">minutes</span>
           </div>
         </footer>
       </article>
-    </section>
+    </main>
 
     <script src="scripts.js"></script>
   </body>

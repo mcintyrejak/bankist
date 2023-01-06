@@ -54,10 +54,15 @@ nav input {
 
 .login-btn {
   padding-left: 10px;
+  background-color: transparent;
+  cursor: pointer;
 }
 
-section {
+main {
   padding: 15px;
+  /* Fades user interface in/out */
+  opacity: 0;
+  transition: all 1s;
 }
 
 .current-balance {
@@ -106,6 +111,10 @@ section {
   padding: 20px 30px;
 }
 
+.transaction:last-child {
+  border-bottom: none;
+}
+
 .td-container {
   display: flex;
   justify-content: space-between;
@@ -115,12 +124,12 @@ section {
 
 .transaction .tag,
 .transaction .date {
-  font-size: 9pt;
   text-transform: uppercase;
   font-weight: 500;
 }
 
 .transaction .tag {
+  font-size: 7pt;
   padding: 3px 7px;
   border-radius: 10px;
   color: #ffffff;
@@ -135,6 +144,7 @@ section {
 }
 
 .transaction .date {
+  font-size: 9pt;
 }
 
 .transaction .amount {
@@ -152,6 +162,7 @@ section {
   border: none;
   padding: 5px 10px;
   border-radius: 7px;
+  cursor: pointer;
 }
 
 .widgets .title {
@@ -208,12 +219,19 @@ footer {
 
 .in,
 .out,
-.interest {
+.interest,
+.sort {
   font-size: 9pt;
   font-weight: 500;
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.sort:hover {
+  background-color: rgb(255, 255, 255, 0.75);
+  border-radius: 7px;
+  cursor: pointer;
 }
 
 .mvmt {
