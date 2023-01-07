@@ -162,6 +162,13 @@ const formatTransactionDate = function (date, locale) {
 //Populate transactions
 const transactionsEl = document.querySelector(".transactions");
 
+const formatCurr = function (value, locale, currency) {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: currency,
+  }).format(value);
+};
+
 const isDeposit = (transaction) => transaction > 0;
 
 const displayTransactions = function (account, sort = false) {
@@ -179,13 +186,19 @@ const displayTransactions = function (account, sort = false) {
     const displayDate = formatTransactionDate(date, account.locale);
 
     //create each transaction
+    const formTransact = formatCurr(
+      transaction,
+      account.locale,
+      account.currency
+    );
+
     const html = `
   <div class="transaction">
   <div class="td-container">
     <span class="tag ${type}">${i + 1} ${type}</span>
     <span class="date">${displayDate}</span>
   </div>
-  <span class="amount">$${transaction.toFixed(2)}</span>
+  <span class="amount">${formTransact}</span>
 </div>
   `;
     //insert each transaction on top
@@ -199,7 +212,12 @@ const calcDisplayBalance = function (account) {
     (acc, transaction) => acc + transaction,
     0
   );
-  balanceEl.textContent = `$${account.balance.toFixed(2)}`;
+
+  balanceEl.textContent = formatCurr(
+    account.balance,
+    account.locale,
+    account.currency
+  );
 };
 
 const totalDepositsEl = document.querySelector(".in .mvmt");
@@ -210,18 +228,30 @@ const calcDisplaySummary = function (account) {
   const totalDeposits = account.movements
     .filter(isDeposit)
     .reduce((acc, transaction) => acc + transaction, 0);
-  totalDepositsEl.innerText = `$${totalDeposits.toFixed(2)}`;
+  totalDepositsEl.innerText = formatCurr(
+    totalDeposits,
+    account.locale,
+    account.currency
+  );
   const totalWithdrawals = account.movements
     .filter((transaction) => transaction < 0)
     .reduce((acc, transaction) => acc + transaction, 0);
-  totalWithdrawalsEl.innerText = `$${(totalWithdrawals * -1).toFixed(2)}`;
+  totalWithdrawalsEl.innerText = formatCurr(
+    Math.abs(totalWithdrawals),
+    account.locale,
+    account.currency
+  );
   const interest = account.movements
     .filter(isDeposit)
     .map((deposit) => (deposit * account.interestRate) / 100)
     //bank only gives interest if the interest generated is more than $1
     .filter((int) => int >= 1)
     .reduce((acc, int) => acc + int, 0);
-  totalInterestEl.innerText = `$${interest.toFixed(2)}`;
+  totalInterestEl.innerText = formatCurr(
+    interest,
+    account.locale,
+    account.currency
+  );
 };
 
 //SORT TRANSACTIONS
