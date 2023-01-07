@@ -12,9 +12,9 @@ const account1 = {
     "2019-05-27T17:01:17.194Z",
     "2019-07-11T23:36:17.929Z",
     "2019-11-18T21:31:17.178Z",
-    "2019-12-23T07:42:02.383Z",
-    "2020-03-08T14:11:59.604Z",
-    "2020-03-12T10:51:36.790Z",
+    "2023-01-01T07:42:02.383Z",
+    "2023-01-02T14:11:59.604Z",
+    "2023-01-06T10:51:36.790Z",
   ],
 };
 
@@ -129,6 +129,23 @@ loginBtn.addEventListener("click", function (e) {
   }
 });
 
+//HANDLE DATES
+const formatTransactionDate = function (date) {
+  const calcDaysPassed = (date1, date2) =>
+    Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+
+  const daysPassed = calcDaysPassed(new Date(), date);
+  console.log(daysPassed);
+
+  if (daysPassed === 0) return "Today";
+  if (daysPassed === 1) return "Yesterday";
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+  const month = `${date.getMonth() + 1}`.padStart(2, 0);
+  const day = `${date.getDate()}`.padStart(2, 0);
+  const year = date.getFullYear();
+  return `${month}/${day}/${year}`;
+};
+
 //TRANSACTIONS
 //Populate transactions
 const transactionsEl = document.querySelector(".transactions");
@@ -146,12 +163,8 @@ const displayTransactions = function (account, sort = false) {
 
   transacts.forEach(function (transaction, i) {
     const type = transaction > 0 ? "deposit" : "withdrawal";
-
     const date = new Date(account.movementDates[i]);
-    const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    const day = `${date.getDate()}`.padStart(2, 0);
-    const year = date.getFullYear();
-    const displayDate = `${month}/${day}/${year}`;
+    const displayDate = formatTransactionDate(date);
 
     //create each transaction
     const html = `
