@@ -6,6 +6,16 @@ const account1 = {
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+  movementDates: [
+    "2019-01-28T09:15:04.904Z",
+    "2019-04-01T10:17:24.185Z",
+    "2019-05-27T17:01:17.194Z",
+    "2019-07-11T23:36:17.929Z",
+    "2019-11-18T21:31:17.178Z",
+    "2019-12-23T07:42:02.383Z",
+    "2020-03-08T14:11:59.604Z",
+    "2020-03-12T10:51:36.790Z",
+  ],
 };
 
 const account2 = {
@@ -13,6 +23,16 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
+  movementDates: [
+    "2019-01-28T09:15:04.904Z",
+    "2019-04-01T10:17:24.185Z",
+    "2019-05-27T17:01:17.194Z",
+    "2019-07-11T23:36:17.929Z",
+    "2019-11-18T21:31:17.178Z",
+    "2019-12-23T07:42:02.383Z",
+    "2020-03-08T14:11:59.604Z",
+    "2020-03-12T10:51:36.790Z",
+  ],
 };
 
 const account3 = {
@@ -20,6 +40,16 @@ const account3 = {
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
+  movementDates: [
+    "2019-01-28T09:15:04.904Z",
+    "2019-04-01T10:17:24.185Z",
+    "2019-05-27T17:01:17.194Z",
+    "2019-07-11T23:36:17.929Z",
+    "2019-11-18T21:31:17.178Z",
+    "2019-12-23T07:42:02.383Z",
+    "2020-03-08T14:11:59.604Z",
+    "2020-03-12T10:51:36.790Z",
+  ],
 };
 
 const account4 = {
@@ -27,6 +57,16 @@ const account4 = {
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
+  movementDates: [
+    "2019-01-28T09:15:04.904Z",
+    "2019-04-01T10:17:24.185Z",
+    "2019-05-27T17:01:17.194Z",
+    "2019-07-11T23:36:17.929Z",
+    "2019-11-18T21:31:17.178Z",
+    "2019-12-23T07:42:02.383Z",
+    "2020-03-08T14:11:59.604Z",
+    "2020-03-12T10:51:36.790Z",
+  ],
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -45,7 +85,7 @@ const createUsernames = function (accts) {
 createUsernames(accounts);
 
 const updateUI = function (account) {
-  displayTransactions(account.movements);
+  displayTransactions(account);
   calcDisplayBalance(account);
   calcDisplaySummary(account);
 };
@@ -71,6 +111,15 @@ loginBtn.addEventListener("click", function (e) {
     welcomeMsgEl.textContent = `Welcome back, ${
       currentAccount.owner.split(" ")[0]
     }!`;
+    //populate current date and time
+    const todaysDate = document.querySelector(".current-balance .date");
+    const now = new Date();
+    const month = `${now.getMonth() + 1}`.padStart(2, 0);
+    const day = `${now.getDate()}`.padStart(2, 0);
+    const year = now.getFullYear();
+    const hour = `${now.getHours()}`.padStart(2, 0);
+    const min = `${now.getMinutes()}`.padStart(2, 0);
+    todaysDate.textContent = `As of ${month}/${day}/${year}, ${hour}:${min}`;
     //show UI
     userInterface.style.opacity = 100;
     updateUI(currentAccount);
@@ -86,23 +135,30 @@ const transactionsEl = document.querySelector(".transactions");
 
 const isDeposit = (transaction) => transaction > 0;
 
-const displayTransactions = function (transactions, sort = false) {
+const displayTransactions = function (account, sort = false) {
   //Clear transactions
   transactionsEl.innerHTML = "";
 
   // Sorts a shallow copy of the transactions
   const transacts = sort
-    ? transactions.slice().sort((a, b) => a - b)
-    : transactions;
+    ? account.movements.slice().sort((a, b) => a - b)
+    : account.movements;
 
   transacts.forEach(function (transaction, i) {
     const type = transaction > 0 ? "deposit" : "withdrawal";
+
+    const date = new Date(account.movementDates[i]);
+    const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    const day = `${date.getDate()}`.padStart(2, 0);
+    const year = date.getFullYear();
+    const displayDate = `${month}/${day}/${year}`;
+
     //create each transaction
     const html = `
   <div class="transaction">
   <div class="td-container">
     <span class="tag ${type}">${i + 1} ${type}</span>
-    <span class="date">1/1/11</span>
+    <span class="date">${displayDate}</span>
   </div>
   <span class="amount">$${transaction.toFixed(2)}</span>
 </div>
@@ -147,7 +203,7 @@ const calcDisplaySummary = function (account) {
 let sorted = false;
 const sortBtn = document.querySelector(".sort");
 sortBtn.addEventListener("click", function () {
-  displayTransactions(currentAccount.movements, !sorted);
+  displayTransactions(currentAccount, !sorted);
   sorted = !sorted;
 });
 
@@ -175,6 +231,9 @@ txfBtn.addEventListener("click", function (e) {
     //make the transfer
     currentAccount.movements.push(-amount);
     recipientAcct.movements.push(amount);
+    recipientAcct.movementDates.push(new Date().toISOString());
+    //add date of transfer
+    currentAccount.movementDates.push(new Date().toISOString());
 
     updateUI(currentAccount);
   }
@@ -219,10 +278,17 @@ requestLoanBtn.addEventListener("click", function (e) {
   ) {
     // Add the loan to the account
     currentAccount.movements.push(loanAmt);
+    // Add loan date
+    currentAccount.movementDates.push(new Date().toISOString());
     updateUI(currentAccount);
     loanAmtEl.value = "";
   }
 });
+
+//FAKE ALWAYS LOGGED IN
+currentAccount = account1;
+updateUI(currentAccount);
+userInterface.style.opacity = 100;
 
 // TODO:
 // 1. allow sorting of transactions by deposit or withdrawal using the filter method
