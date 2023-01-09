@@ -98,13 +98,38 @@ const updateUI = function (account) {
   calcDisplaySummary(account);
 };
 
+//Logout timer
+const timerEl = document.querySelector(".time");
+const startLogOutTimer = function () {
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+    //In each call, print the remaining time to the UI
+    timerEl.textContent = `${min}:${sec}`;
+    //When time = 0, stop timer and log user out
+    if (time === 0) {
+      clearInterval(timer);
+      welcomeMsgEl.textContent = "Login to get started";
+      userInterface.style.opacity = 0;
+    }
+    //Decrease 1s
+    time--;
+  };
+  //Set time to 10 mins
+  let time = 1000;
+  //Call the timer every second
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+
 //Login User
 const userNameEl = document.querySelector(".username");
 const pinEl = document.querySelector(".pin");
 const loginBtn = document.querySelector(".login-btn");
 const welcomeMsgEl = document.querySelector("nav span");
 const userInterface = document.querySelector("main");
-let currentAccount;
+let currentAccount, timer;
 
 loginBtn.addEventListener("click", function (e) {
   e.preventDefault();
@@ -138,8 +163,13 @@ loginBtn.addEventListener("click", function (e) {
     ).format(now)}`;
     //show UI
     userInterface.style.opacity = 100;
+
+    // Timer
+    if (timer) clearInterval(timer);
+    timer = startLogOutTimer();
+    // update UI
     updateUI(currentAccount);
-    //clear input fields
+    // clear input fields
     userNameEl.value = pinEl.value = "";
     pinEl.blur();
   }
@@ -331,19 +361,23 @@ requestLoanBtn.addEventListener("click", function (e) {
     loanAmt > 0 &&
     currentAccount.movements.some((mov) => mov >= loanAmt * 0.1)
   ) {
-    // Add the loan to the account
-    currentAccount.movements.push(loanAmt);
-    // Add loan date
-    currentAccount.movementDates.push(new Date().toISOString());
-    updateUI(currentAccount);
+    setTimeout(function () {
+      // Add the loan to the account
+      currentAccount.movements.push(loanAmt);
+      // Add loan date
+      currentAccount.movementDates.push(new Date().toISOString());
+      // Update UI
+      updateUI(currentAccount);
+    }, 2500);
+
     loanAmtEl.value = "";
   }
 });
 
 //FAKE ALWAYS LOGGED IN
-currentAccount = account1;
-updateUI(currentAccount);
-userInterface.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// userInterface.style.opacity = 100;
 
 // TODO:
 // 1. allow sorting of transactions by deposit or withdrawal using the filter method
@@ -354,3 +388,5 @@ userInterface.style.opacity = 100;
 // 5. Throw an error message when trying to transfer more money than available
 // 6. Throw an error message when trying to close an account using the wrong username or pin
 // 7. Create a denial alert for a loan amount that is more than 10% of at least one deposit
+// 8. Display a message when successfully logged out
+// 9. Display a message when timer logs you out
