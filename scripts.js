@@ -321,6 +321,9 @@ txfBtn.addEventListener("click", function (e) {
     currentAccount.movementDates.push(new Date().toISOString());
 
     updateUI(currentAccount);
+    //reset timer
+    clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -368,6 +371,9 @@ requestLoanBtn.addEventListener("click", function (e) {
       currentAccount.movementDates.push(new Date().toISOString());
       // Update UI
       updateUI(currentAccount);
+      //reset timer
+      clearInterval(timer);
+      timer = startLogOutTimer();
     }, 2500);
 
     loanAmtEl.value = "";
